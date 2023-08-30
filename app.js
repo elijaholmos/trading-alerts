@@ -2,6 +2,7 @@ import { WebClient } from '@slack/web-api';
 import 'dotenv/config.js';
 import { launch } from 'puppeteer';
 import { TickerWatcher } from './TickerWatcher.js';
+import dynamicImport from './dynamicImport.js';
 
 const slack = new WebClient(process.env.SLACK_TOKEN);
 
@@ -12,7 +13,9 @@ const priceChangeHandler = async ({ ticker, initialPrice, price, delta, threshol
 
 	const browser = await launch({ headless: 'new' });
 	const page = await browser.newPage();
-	const articles = await (await import('./scrapers/bloomberg.js')).run({ page, ticker });
+	const articles = await (
+		await dynamicImport('https://raw.githubusercontent.com/elijaholmos/trading-alerts/main/scrapers/bloomberg.js')
+	).run({ page, ticker });
 
 	let text = `[${ticker}]: Price change from ${initialPrice} to ${price} exceeds threshold (${threshold * 100}%): ${(
 		delta * 100
