@@ -7,8 +7,10 @@ const KEYWORDS = ['fed', 'EY'];
  */
 export async function run({ page, ticker }) {
 	// Navigate the page to a URL
-	await page.goto(`https://www.bnnbloomberg.ca/search/bnn-search-7.337157?q=.`);
+	console.log(`[${ticker}]: navigating to page...`);
+	await page.goto(`https://www.bnnbloomberg.ca/search/bnn-search-7.337157?q=.`, { timeout: 0 });
 
+	console.log(`[${ticker}]: waiting for search results...`);
 	await page.waitForSelector('.search-results');
 	const news = (
 		await page.$eval(
@@ -44,7 +46,6 @@ export async function run({ page, ticker }) {
 		if (!arr.some(({ url }) => item.url === url)) arr.push(item);
 		return arr;
 	}, []);
-	console.log('news', news);
 
 	return news;
 }
