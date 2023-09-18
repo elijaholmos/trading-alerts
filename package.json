@@ -1,12 +1,31 @@
 {
+	"name": "metex-trading-alerts",
+	"version": "0.0.1",
+	"description": "Distributed trading alerts watcher and notifier for Metex",
+	"author": "Elijah Olmos",
+	"main": "dist/index.cjs",
+	"module": "dist/index.mjs",
 	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"build": "rollup -c"
+	},
+	"repository": "elijaholmos/metex-trading-alerts",
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"homepage": "https://github.com/elijaholmos/metex-trading-alerts",
+	"packageManager": "pnpm@8.7.6",
 	"dependencies": {
-		"@slack/web-api": "6.9.0",
-		"dotenv": "16.3.1",
 		"puppeteer": "21.1.0",
 		"ws": "8.13.0"
 	},
-	"scripts": {
-		"start": "node --experimental-vm-modules app"
+	"devDependencies": {
+		"@slack/web-api": "6.9.0",
+		"dotenv": "16.3.1",
+		"rollup": "3.29.2",
+		"rollup-plugin-multi-input": "1.4.1"
 	}
 }
