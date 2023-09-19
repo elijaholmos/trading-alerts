@@ -8,6 +8,7 @@ export class TickerWatcher extends EventEmitter {
 
 	constructor({ ticker, duration = 90000, threshold = 0.03 }) {
 		super();
+		if (!process.env.TIINGO_TOKEN) throw new Error('Missing Tiingo API token');
 		this.ws = new WebSocket('wss://api.tiingo.com/iex');
 		this.ticker = ticker.toUpperCase(); // doesn't matter, just for appearance
 		this.duration = duration;
@@ -41,6 +42,11 @@ export class TickerWatcher extends EventEmitter {
 			// parse message
 			const message = JSON.parse(Buffer.from(_data).toString());
 			const { messageType, data } = message;
+			if (messageType === 'E') {
+				this.log(`Encoutered error: ${message?.response?.message}`);
+				console.error(message?.response);
+				this.close();
+			}
 
 			// validate message
 			if (messageType !== 'A' || !Array.isArray(data)) return;
