@@ -90,7 +90,7 @@ async function linkWithImportMap({ imports }) {
  * @param {ImportMap} importMap Optional Path to import_map.json file or object.
  * @returns {Promise<any>} Result of the evaluated code.
  */
-export default async function dynamicImport(specifier, sandbox = {}, { imports = {} } = { imports: {} }) {
+export async function dynamicImport(specifier, sandbox = {}, { imports = {} } = { imports: {} }) {
 	// Take a specifier from the import map or use it directly. The
 	// specifier must be a valid URL.
 	const url = specifier in imports ? new URL(imports[specifier]) : new URL(specifier);

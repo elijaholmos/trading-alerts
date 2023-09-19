@@ -1,11 +1,12 @@
 {
-	"name": "metex-trading-alerts",
+	"name": "@metex/trading-alerts",
 	"version": "0.0.1",
 	"description": "Distributed trading alerts watcher and notifier for Metex",
 	"author": "Elijah Olmos",
-	"main": "dist/index.cjs",
-	"module": "dist/index.mjs",
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
 	"type": "module",
+	"private": false,
 	"license": "MIT",
 	"scripts": {
 		"build": "rollup -c"
@@ -26,6 +27,6 @@
 		"@slack/web-api": "6.9.0",
 		"dotenv": "16.3.1",
 		"rollup": "3.29.2",
-		"rollup-plugin-multi-input": "1.4.1"
+		"rollup-plugin-empty-dir": "1.0.5"
 	}
 }
