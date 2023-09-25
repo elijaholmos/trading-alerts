@@ -43,4 +43,10 @@ const watchers = TICKERS.map(
 			threshold: 0.0003,
 		})
 );
-watchers.forEach((watcher) => watcher.on('priceChange', priceChangeHandler));
+watchers.forEach((watcher) => {
+	watcher.on('priceChange', priceChangeHandler);
+	watcher.on('open', () => console.log(`started watcher: ${watcher.ticker}`));
+	watcher.on('close', ({ initialPrice, lastPrice }) =>
+		console.log(`closed watcher: ${watcher.ticker}`, initialPrice, lastPrice)
+	);
+});

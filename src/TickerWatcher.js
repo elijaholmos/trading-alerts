@@ -3,6 +3,7 @@ import WebSocket from 'ws';
 
 export class TickerWatcher extends EventEmitter {
 	initialPrice = null;
+	lastPrice = null;
 	startDate = null;
 	closed = false;
 
@@ -57,11 +58,13 @@ export class TickerWatcher extends EventEmitter {
 	}
 
 	close() {
+		const { initialPrice, lastPrice } = this;
+
 		this.closed = true;
 		void clearTimeout(this.closeTimeout);
 		void this.log(`Ending ${this.duration}ms monitor at ${new Date()}`);
 		void this.ws.close();
-		this.emit('close');
+		this.emit('close', { initialPrice, lastPrice });
 	}
 
 	log(message, ...args) {
@@ -77,6 +80,9 @@ export class TickerWatcher extends EventEmitter {
 			this.initialPrice = price;
 			return void this.log(`Initial price set to ${price}`);
 		}
+
+		// set lastPrice
+		this.lastPrice = price;
 
 		// if change in price exceeds threshold, alert
 		const delta = Math.abs((price - initialPrice) / initialPrice);
