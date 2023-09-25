@@ -20,12 +20,12 @@
 	"homepage": "https://github.com/elijaholmos/metex-trading-alerts",
 	"packageManager": "pnpm@8.7.6",
 	"dependencies": {
-		"puppeteer": "21.1.0",
 		"ws": "8.13.0"
 	},
 	"devDependencies": {
 		"@slack/web-api": "6.9.0",
 		"dotenv": "16.3.1",
+		"puppeteer": "21.1.0",
 		"rollup": "3.29.2",
 		"rollup-plugin-empty-dir": "1.0.5"
 	}
