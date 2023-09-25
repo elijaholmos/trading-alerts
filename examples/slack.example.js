@@ -1,7 +1,7 @@
+import { TickerWatcher, dynamicImport } from '@metex/trading-alerts';
 import { WebClient } from '@slack/web-api';
 import 'dotenv/config.js';
 import puppeteer from 'puppeteer';
-import { TickerWatcher } from './src/TickerWatcher.js';
 
 const slack = new WebClient(process.env.SLACK_TOKEN);
 console.log(`launching browser...`);
