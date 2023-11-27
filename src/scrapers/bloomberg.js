@@ -5,7 +5,7 @@ const KEYWORDS = ['fed', 'EY'];
  * @param {import('puppeteer').Page} args.page
  * @returns
  */
-export async function run({ page, ticker }) {
+export async function bloomberg({ page, ticker }) {
 	// Navigate the page to a URL
 	console.log(`[${ticker}]: navigating to page...`);
 	await page.goto(`https://www.bnnbloomberg.ca/search/bnn-search-7.337157?q=.`, { timeout: 0 });

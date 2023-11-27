@@ -1,4 +1,4 @@
-export default async function run({ page, ticker }) {
+export async function cnbc({ page, ticker }) {
 	// Navigate the page to a URL
 	await page.goto(`https://www.cnbc.com/quotes/${ticker}?tab=news`);
 

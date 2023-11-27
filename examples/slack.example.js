@@ -7,7 +7,7 @@ const slack = new WebClient(process.env.SLACK_TOKEN);
 console.log(`launching browser...`);
 const browser = await puppeteer.launch({ headless: 'new' });
 
-const TICKERS = ['AAPL', 'GME', 'MSFT', 'TWTR', 'TSLA', 'AMZN'];
+const TICKERS = ['AAPL', 'GME', 'MSFT', 'TSLA', 'AMZN'];
 
 const priceChangeHandler = async ({ ticker, initialPrice, price, delta, threshold }) => {
 	console.log('price change!', ticker, initialPrice, price, delta);
