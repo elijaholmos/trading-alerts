@@ -7,9 +7,9 @@ export class TickerWatcher extends EventEmitter {
 	startDate = null;
 	closed = false;
 
-	constructor({ ticker, duration = 90000, threshold = 0.03 }) {
+	constructor({ ticker, duration = 90000, threshold = 0.03, token = process.env.TIINGO_TOKEN }) {
 		super();
-		if (!process.env.TIINGO_TOKEN) throw new Error('Missing Tiingo API token');
+		if (!token) throw new Error('Missing Tiingo API token');
 		this.ws = new WebSocket('wss://api.tiingo.com/iex');
 		this.ticker = ticker.toUpperCase(); // doesn't matter, just for appearance
 		this.duration = duration;

@@ -1,11 +1,12 @@
-const KEYWORDS = ['fed', 'EY'];
-
 /**
  * @param {object} args
  * @param {import('puppeteer').Page} args.page
+ * @param {string} args.ticker Ticker to scrape for
+ * @param {Array<string>} args.keywords Keywords to search for in articles
  * @returns
  */
-export async function bloomberg({ page, ticker }) {
+export async function bloomberg({ page, ticker, keywords }) {
+	validateArgs({ page, ticker, keywords });
 	// Navigate the page to a URL
 	console.log(`[${ticker}]: navigating to page...`);
 	await page.goto(`https://www.bnnbloomberg.ca/search/bnn-search-7.337157?q=.`, { timeout: 0 });
@@ -15,10 +16,10 @@ export async function bloomberg({ page, ticker }) {
 	const news = (
 		await page.$eval(
 			'.search-results',
-			(parentEl, KEYWORDS) => {
+			(parentEl, keywords) => {
 				// recursively search each element for keywords
 				const deepSearch = (el, matches = []) => {
-					for (const word of KEYWORDS)
+					for (const word of keywords)
 						if (
 							el?.getAttribute('ng-bind-html')?.contains('result.Name') &&
 							el?.innerText?.toLowerCase()?.includes(word.toLowerCase())
@@ -28,7 +29,7 @@ export async function bloomberg({ page, ticker }) {
 								url: el.closest('a')?.href,
 							});
 					// if (!el?.children?.length) {
-					// 	for (const word of KEYWORDS)
+					// 	for (const word of keywords)
 					// 		if (el?.innerText?.toLowerCase()?.includes(word.toLowerCase())) matches.push(el);
 					// 	return matches;
 					// }
@@ -39,7 +40,7 @@ export async function bloomberg({ page, ticker }) {
 
 				return deepSearch(parentEl);
 			},
-			KEYWORDS
+			keywords
 		)
 	).reduce((arr, item) => {
 		// remove dups
@@ -48,4 +49,11 @@ export async function bloomberg({ page, ticker }) {
 	}, []);
 
 	return news;
+}
+
+function validateArgs({ page, ticker, keyword }) {
+	if (!page) throw new Error('Missing `page` argument');
+	if (!ticker) throw new Error('Missing `ticker` argument');
+	if (!keyword) throw new Error('Missing `keyword` argument');
+	if (!keyword?.length) throw new Error('`keyword` must be a non-empty array');
 }

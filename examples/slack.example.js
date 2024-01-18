@@ -1,4 +1,4 @@
-import { TickerWatcher, dynamicImport } from '@metex/trading-alerts';
+import { TickerWatcher, scrapers } from '@metex/trading-alerts';
 import { WebClient } from '@slack/web-api';
 import 'dotenv/config.js';
 import puppeteer from 'puppeteer';
@@ -14,10 +14,12 @@ const priceChangeHandler = async ({ ticker, initialPrice, price, delta, threshol
 
 	console.log(`[${ticker}]: creating page...`);
 	const page = await browser.newPage();
+	await page.setUserAgent(
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+	);
+	await page.setViewport({ width: 1920, height: 1080 });
 	console.log(`[${ticker}]: getting articles...`);
-	const articles = await (
-		await dynamicImport('https://raw.githubusercontent.com/elijaholmos/trading-alerts/main/scrapers/bloomberg.js')
-	).run({ page, ticker });
+	const articles = await scrapers.bloomberg({ page, ticker });
 	console.log(`[${ticker}]: got articles!`, articles);
 	page.close();
 
