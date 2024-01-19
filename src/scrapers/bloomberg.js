@@ -51,9 +51,9 @@ export async function bloomberg({ page, ticker, keywords }) {
 	return news;
 }
 
-function validateArgs({ page, ticker, keyword }) {
+function validateArgs({ page, ticker, keywords }) {
 	if (!page) throw new Error('Missing `page` argument');
 	if (!ticker) throw new Error('Missing `ticker` argument');
-	if (!keyword) throw new Error('Missing `keyword` argument');
-	if (!keyword?.length) throw new Error('`keyword` must be a non-empty array');
+	if (!keywords) throw new Error('Missing `keywords` argument');
+	if (!keywords?.length) throw new Error('`keywords` must be a non-empty array');
 }

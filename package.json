@@ -1,6 +1,6 @@
 {
 	"name": "@metex/trading-alerts",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Distributed trading alerts watcher and notifier for Metex",
 	"author": "Elijah Olmos",
 	"main": "dist/cjs/index.cjs",
